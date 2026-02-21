@@ -1,0 +1,111 @@
+# Build outputs
+*/bin/
+*/obj/
+**/bin/**
+**/obj/**
+
+# Version control
+.git/
+.gitignore
+.gitattributes
+
+# IDE and editor files
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# NUnit
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+
+# Build Results of an ATL Project
+[Dd]ebugPS/
+[Rr]eleasePS/
+dlldata.c
+
+# DNX / .NET Core
+artifacts/
+**/Properties/launchSettings.json
+
+# NuGet Packages
+*.nupkg
+**/packages/*
+!**/packages/build/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# VS Code directories
+.vscode/
+
+# MacOS
+.DS_Store
+
+# JetBrains IDEs
+.idea/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Dependencies
+node_modules/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Environment files (should be set in Render)
+.env
+.env.*
+
+# Database files
+*.db
+*.sqlite
+
+# Documentation
+README.md
+*.md
+
+# Frontend build artifacts (if any)
+wwwroot/dist/
+wwwroot/build/
+
+# Docker itself
+Dockerfile
+.dockerignore
+
+# Build logs and verification files
+build_output.txt
+final_build_output.txt
+FINAL_LOG.txt
+FINAL_TEST.txt
+final_verification_*.txt
