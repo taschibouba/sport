@@ -55,4 +55,26 @@ export class DashboardService {
             tap((data: any[]) => console.log('DashboardService: Person Distribution reçue:', data))
         );
     }
+
+    getPersons(): Observable<any[]> {
+        return this.http.get<any[]>(`${environment.apiUrl}/analytics/persons`).pipe(
+            tap((data: any[]) => console.log('DashboardService: Persons sample reçue:', data))
+        );
+    }
+
+    getTopProducts(limit = 10): Observable<any[]> {
+        return this.http.get<any[]>(`${environment.apiUrl}/analytics/top-products?limit=${limit}`);
+    }
+
+    getSalesByTerritory(): Observable<any[]> {
+        return this.http.get<any[]>(`${environment.apiUrl}/analytics/sales-by-territory`);
+    }
+
+    getTopSalesPersons(limit = 10): Observable<any[]> {
+        return this.http.get<any[]>(`${environment.apiUrl}/analytics/top-salespersons?limit=${limit}`);
+    }
+
+    getCreditCardsByType(): Observable<any[]> {
+        return this.http.get<any[]>(`${environment.apiUrl}/analytics/credit-cards-by-type`);
+    }
 }
