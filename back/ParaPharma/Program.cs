@@ -26,6 +26,7 @@ builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 // DbContexts
 builder.Services.AddDbContext<OltpDbContext>(options =>

@@ -8,28 +8,30 @@ import { environment } from '../../../environments/environment';
     providedIn: 'root'
 })
 export class ProductService {
-    private apiUrl = `${environment.apiUrl}/products`;
+    private apiUrl = `${environment.apiUrl}/products`; //Le serveur .NET reçoit cette demande,
+    // cherche les produits dans la base de données, et les renvoie en format JSON à ton application Angular.
 
     constructor(private http: HttpClient) { }
 
-    getAll(): Observable<Product[]> {
-        return this.http.get<Product[]>(this.apiUrl).pipe(
-            map((products: Product[]) => products.map(p => this.assignImageUrl(p))),
+    getAll(): Observable<Product[]> { //Récupère tous les produits avec images statique
+        return this.http.get<Product[]>(this.apiUrl).pipe( // pipe: enchaîner des opérateurs sur un Observable (comme une requête HTTP). Au lieu de recevoir la donnée brute du serveur,
+            // tu peux la transformer, la filtrer ou l'espionner avant qu'elle n'arrive à ton composant.
+            map((products: Product[]) => products.map(p => this.assignImageUrl(p))), //transformer la réponse pour ajouter l'URL de l'image à chaque produit
             tap(data => console.log('ProductService: Liste des produits reçue avec images:', data))
         );
     }
 
-    getById(id: number): Observable<Product> {
+    getById(id: number): Observable<Product> { //Récupère un produit par son ID
         return this.http.get<Product>(`${this.apiUrl}/${id}`).pipe(
             map((product: Product) => this.assignImageUrl(product))
         );
     }
 
-    private assignImageUrl(product: Product): Product {
+    private assignImageUrl(product: Product): Product { //Assigne une URL d'image à un produit
         // 1. Check if there's a custom URL in localStorage
         const customUrl = this.getCustomImageUrl(product.id);
-        if (customUrl) {
-            return { ...product, imageUrl: customUrl };
+        if (customUrl) { //Si une URL personnalisée existe dans localStorage
+            return { ...product, imageUrl: customUrl }; //Retourne le produit avec l'URL personnalisée
         }
 
         const name = (product.name || '').toLowerCase();
@@ -81,34 +83,34 @@ export class ProductService {
             return {};
         }
     }
-
+    //Récupère les produits selon des filtres spécifiques
     getByFilter(filter: ProductFilter): Observable<Product[]> {
-        let params = new HttpParams()
-            .set('page', filter.page.toString())
-            .set('pageSize', filter.pageSize.toString());
+        let params = new HttpParams() //Crée un objet HttpParams pour construire les paramètres de la requête HTTP
+            .set('page', filter.page.toString()) //Ajoute le paramètre 'page' à la requête HTTP
+            .set('pageSize', filter.pageSize.toString()); //Ajoute le paramètre 'pageSize' à la requête HTTP
 
-        if (filter.categoryId) params = params.set('categoryId', filter.categoryId.toString());
-        if (filter.subCategoryId) params = params.set('subCategoryId', filter.subCategoryId.toString());
-        if (filter.minPrice) params = params.set('minPrice', filter.minPrice.toString());
-        if (filter.maxPrice) params = params.set('maxPrice', filter.maxPrice.toString());
-        if (filter.sortBy) params = params.set('sortBy', filter.sortBy);
+        if (filter.categoryId) params = params.set('categoryId', filter.categoryId.toString()); //Ajoute le paramètre 'categoryId' à la requête HTTP
+        if (filter.subCategoryId) params = params.set('subCategoryId', filter.subCategoryId.toString()); //Ajoute le paramètre 'subCategoryId' à la requête HTTP
+        if (filter.minPrice) params = params.set('minPrice', filter.minPrice.toString()); //Ajoute le paramètre 'minPrice' à la requête HTTP
+        if (filter.maxPrice) params = params.set('maxPrice', filter.maxPrice.toString()); //Ajoute le paramètre 'maxPrice' à la requête HTTP
+        if (filter.sortBy) params = params.set('sortBy', filter.sortBy); //Ajoute le paramètre 'sortBy' à la requête HTTP
 
-        return this.http.get<Product[]>(this.apiUrl, { params });
+        return this.http.get<Product[]>(this.apiUrl, { params }); //Envoie la requête HTTP avec les paramètres
     }
 
-    getFeatured(): Observable<Product[]> {
-        return this.http.get<Product[]>(`${this.apiUrl}/featured`);
+    getFeatured(): Observable<Product[]> { //Récupère les produits mis en avant
+        return this.http.get<Product[]>(`${this.apiUrl}/featured`); //Envoie la requête HTTP avec les paramètres
     }
 
-    create(product: CreateProductDto): Observable<Product> {
-        return this.http.post<Product>(this.apiUrl, product);
+    create(product: CreateProductDto): Observable<Product> { //Crée un nouveau produit
+        return this.http.post<Product>(this.apiUrl, product); //Envoie la requête HTTP avec les paramètres
     }
 
-    update(id: number, product: UpdateProductDto): Observable<Product> {
-        return this.http.put<Product>(`${this.apiUrl}/${id}`, product);
+    update(id: number, product: UpdateProductDto): Observable<Product> { //Met à jour un produit existant
+        return this.http.put<Product>(`${this.apiUrl}/${id}`, product); //Envoie la requête HTTP avec les paramètres
     }
 
-    delete(id: number): Observable<void> {
-        return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    delete(id: number): Observable<void> { //Supprime un produit
+        return this.http.delete<void>(`${this.apiUrl}/${id}`); //Envoie la requête HTTP avec les paramètres
     }
 }
